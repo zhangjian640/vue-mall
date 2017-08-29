@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="../node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+<div id="app">
+  <a href="javascript:;" @click="get">get请求</a>
+  <a href="javascript:;" @click="post">post请求</a>
+  <div>{{msg}}</div>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data () {
+      return {
+        msg: ''
+      }
+    },
+    mounted (){
+      axios.interceptors.request.use((config)=>{
+        console.log('request init')
+        return config
+      })
+      axios.interceptors.response.use((config)=>{
+        console.log('response init')
+        return config
+      })
+
+    },
+    methods: {
+      get () {
+        axios.get('../package.json', {
+          params: {
+            userId: 1
+          },
+          headers: {
+            token: 'zj'
+          }
+        }).then(res=>{
+          this.msg = res.data
+        }).catch(err=>{
+          this.msg = err
+        })
+      },
+      post () {
+        axios.post('../package.json', {
+          userId: 1
+        },{
+          headers: {
+            token: 'zj'
+          }
+        }).then(res=>{
+          this.msg = res.data
+        }).catch(err=>{
+          this.msg = err
+        })
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="username" type="text">
+<br>
+<span id="msg"></span>
+<script>
+    var obj = {
+      pwd: 123213
+    };
+    // 给一个对象扩展属性
+    Object.defineProperty(obj,'username', {
+      get: function () {
+        console.log('get init')
+      },
+      set: function (val) {
+        console.log('set init')
+        document.getElementById('msg').innerText = val;
+        document.getElementById('username').value = val;
+      }
+    });
+
+    document.getElementById('username').addEventListener('keyup', function (e) {
+      obj.username = e.target.value
+
+    })
+</script>
+</body>
+</html>
